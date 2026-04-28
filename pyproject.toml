@@ -6,7 +6,9 @@ authors = [
     { name = "Greg Martin", email = "gregory.martin.data@gmail.com" }
 ]
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "typer>=0.25.0",
+]
 
 [project.scripts]
 memgrep = "memgrep:main"
