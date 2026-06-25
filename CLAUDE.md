@@ -4,6 +4,8 @@ Project-level conventions for `memgrep`, a personal CLI to grep across Claude Co
 
 Single-user, Linux-only, distributed via `uv tool install .` from the local repo. No PyPI, no multi-OS support.
 
+> **Documentary track: light.** This project qualifies for the light track per `~/dotfiles/adr/0011-track-leger-petits-projets.md` (single-user, no collaborators, no public distribution, non-critical lifespan). Therefore: **no `PLAN.md`, no ADRs.** Durable decisions are recorded under "Décisions prises" in `progress.md`, not in ADR files. `PRD.md` is frozen as a historical artifact (it predates the current PRD-light doctrine and intentionally keeps stack/phases/risks).
+
 ---
 
 ## For AI — Read first (order)

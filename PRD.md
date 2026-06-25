@@ -1,5 +1,14 @@
 # PRD — memgrep
 
+> **Artefact historique — gelé.** Ce PRD a été rédigé avant la doctrine PRD-allégé
+> (matrice de responsabilité, juin 2026) et précède l'existence des ADR. Il contient
+> volontairement des sections aujourd'hui proscrites dans un PRD (stack technique,
+> phases d'implémentation, risques techniques, critères de succès) — celles-ci
+> vivraient désormais dans CLAUDE.md / PLAN.md / ADR. Le projet étant en **track
+> léger** (cf. CLAUDE.md et `~/dotfiles/adr/0011`), ce document est conservé tel quel
+> comme photo de l'intention initiale, sans réécriture ni migration. Ne pas le
+> conformer rétroactivement.
+
 ## Résumé
 
 La mémoire persistante de Claude Code (`~/.claude/projects/*/memory/*.md`) accumule au fil des sessions des décisions, des retours utilisateur, des notes projet et des références externes. Sans outil de recherche, ce capital devient inutilisable en pratique : on redécouvre des choses déjà résolues, ou on ouvre plusieurs fichiers à la main pour retrouver une information.
