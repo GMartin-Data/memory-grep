@@ -8,10 +8,12 @@ from pathlib import Path
 import typer
 
 from memgrep.formatter import format_match
+from memgrep.frontmatter import InvalidFrontmatterError, parse_frontmatter
 from memgrep.matcher import find_matches
 from memgrep.scanner import discover_memory_files
 
 DEFAULT_PROJECTS_DIR = Path.home() / ".claude" / "projects"
+VALID_TYPES = ("user", "feedback", "project", "reference")
 
 app = typer.Typer(
     add_completion=False,
@@ -22,7 +24,19 @@ app = typer.Typer(
 @app.command()
 def main(
     pattern: str = typer.Argument(..., help="Substring to search for (smart-case)."),
+    type_filter: str | None = typer.Option(
+        None,
+        "--type",
+        help="Restrict to memory of this type: user, feedback, project, reference.",
+    ),
 ) -> None:
+    if type_filter is not None and type_filter not in VALID_TYPES:
+        typer.echo(
+            f"Invalid --type '{type_filter}'. Valid values: {', '.join(VALID_TYPES)}.",
+            err=True,
+        )
+        raise typer.Exit(code=2)
+
     projects_dir = DEFAULT_PROJECTS_DIR
 
     try:
@@ -32,7 +46,6 @@ def main(
         raise typer.Exit(code=2) from None
 
     total_matches = 0
-    files_with_matches = 0
 
     for file_path in memory_files:
         try:
@@ -41,9 +54,19 @@ def main(
             typer.echo(f"{file_path}: cannot read ({exc})", err=True)
             continue
 
+        try:
+            metadata = parse_frontmatter(content)[0]
+        except InvalidFrontmatterError:
+            typer.echo(f"{file_path}: invalid frontmatter, scanning content only", err=True)
+            metadata = None
+
+        if type_filter is not None:
+            file_type = metadata.get("type") if metadata else None
+            if file_type != type_filter:
+                continue
+
         matches = find_matches(content, pattern)
         if matches:
-            files_with_matches += 1
             total_matches += len(matches)
             for match in matches:
                 typer.echo(format_match(file_path, match))
