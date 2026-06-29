@@ -1,4 +1,26 @@
 ## Dernière mise à jour
+Date : 2026-06-29 12:40
+Session : d8586491-f904-4a04-a59c-04ea6c32be5a
+
+## Tâches complétées
+- feat/phase-1b-frontmatter mergée ff-only sur main puis poussée (origin d2035a5..5ab30b6)
+  - checkpoint Phase 1b commité sur la branche avant merge (scope docs)
+  - branche locale + distante supprimées (nettoyage post-phase)
+
+## Prochaines étapes
+1. Ouvrir une fenêtre de contexte dédiée pour Phase 2 (feat/phase-2-output-enriched)
+2. Phase 2 : header par fichier, contexte ±2 lignes, highlight ANSI conditionnel TTY,
+   résumé final "N matches dans M fichiers", vérification cas 5 (fichier illisible)
+
+## Décisions prises
+- --case-sensitive REJETÉ en v1 (YAGNI). On garde le smart-case seul (ripgrep-aligned,
+  figé PRD). Pas d'override manuel de la casse : si pattern tout-minuscule → insensible,
+  point. Le point ouvert reporté depuis Phase 1a est donc clos. Réévaluable en v2 si un
+  besoin réel de distinguer `stop` de `Stop` émerge.
+
+---
+
+## Dernière mise à jour
 Date : 2026-06-25 18:00
 Session : 712752d3-551a-4c51-ab3c-cd688ae0b781
 
