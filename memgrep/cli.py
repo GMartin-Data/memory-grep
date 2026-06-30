@@ -7,7 +7,7 @@ from pathlib import Path
 
 import typer
 
-from memgrep.formatter import format_match
+from memgrep.formatter import format_file_block, format_summary
 from memgrep.frontmatter import InvalidFrontmatterError, parse_frontmatter
 from memgrep.matcher import find_matches
 from memgrep.scanner import discover_memory_files
@@ -45,7 +45,9 @@ def main(
         typer.echo(f"No memory directory found at {projects_dir}", err=True)
         raise typer.Exit(code=2) from None
 
+    color = sys.stdout.isatty()
     total_matches = 0
+    matched_files = 0
 
     for file_path in memory_files:
         try:
@@ -68,8 +70,19 @@ def main(
         matches = find_matches(content, pattern)
         if matches:
             total_matches += len(matches)
-            for match in matches:
-                typer.echo(format_match(file_path, match))
+            matched_files += 1
+            block = format_file_block(
+                file_path,
+                metadata,
+                content.splitlines(),
+                matches,
+                color=color,
+                pattern=pattern,
+            )
+            typer.echo(block)
+            typer.echo()
 
     if total_matches == 0:
         sys.exit(1)
+
+    typer.echo(format_summary(total_matches, matched_files))
