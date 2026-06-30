@@ -27,6 +27,16 @@ def test_smoke_finds_match_in_fake_home(fake_home: Path) -> None:
     assert "dogfooding" in result.stdout
 
 
+def test_output_ends_with_separator_then_summary(fake_home: Path) -> None:
+    result = _run_memgrep("dogfooding", fake_home)
+
+    assert result.returncode == 0, result.stderr
+    lines = result.stdout.splitlines()
+    # The summary is the last line; the horizontal-rule separator precedes it.
+    assert lines[-1] == "1 match in 1 file"
+    assert lines[-2] == "─" * 10
+
+
 def test_no_matches_exits_with_code_1(fake_home: Path) -> None:
     result = _run_memgrep("zzz_no_such_pattern_zzz", fake_home)
 
