@@ -1,4 +1,63 @@
 ## Dernière mise à jour
+Date : 2026-06-30 (Phase 3 — polish, en cours)
+Session : 6bc5c584-f878-4890-8da3-f81e389d28f9
+
+## Tâches complétées
+- Branche feat/phase-3-polish créée depuis main (clean, 26/26 tests verts)
+- Décision PRD cas 2/3 tranchée (voir Décisions) avant gel
+- Livrables PRD Phase 3 :
+  - tests : cas 7 (fichier sans frontmatter → header path-only) + R5
+    (scanner exclut agent-memory/<agent>/MEMORY.md et memory/ imbriqué
+    > 1 segment) → commit b7cef08. Suite à 30/30 verts (26 → +4)
+  - docs : README minimal (install uv tool install, 3 exemples dont sortie
+    réelle smart-case, filtre --type, note pipe-friendly, table exit codes)
+    → commit 33a7aef
+  - --help : vérifié propre (annotations Typer suffisent, arg pattern + flag
+    --type avec valeurs admises documentés) — aucun changement requis
+
+## En cours
+- Phase 3 non terminée : reste le checkpoint /progress (ce commit) puis
+  rebase + merge ff-only sur main
+
+## Prochaines étapes
+1. Commiter ce checkpoint progress.md (scope docs)
+2. Rebase + merge ff-only de feat/phase-3-polish sur main, push, supprimer branche
+3. Traiter la dette ruff format (commit chore dédié, voir Écarts) — hors Phase 3
+4. Phase 3 = dernière phase PRD : passer en dogfooding (critères succès 5a/5b/6
+   sur 1 semaine d'usage réel) ; v1 fonctionnellement complète après merge
+
+## Écarts vs PRD
+- DETTE RUFF FORMAT (nouvelle, pré-existante sur main) : ruff 0.15.5 veut
+  reformater memgrep/formatter.py et tests/test_smoke.py (éclatement de lignes
+  ≤ 100 char en multi-lignes). Vérifié identiques à main (git diff vide) → drift
+  introduit par bump de version ruff, PAS par Phase 3. Laissé tel quel par
+  discipline « surgical changes » (ne pas reformater du code adjacent non touché).
+  À corriger en commit chore dédié hors phase (ruff format sur tout le repo).
+- Findings low acceptés (YAGNI, non traités, signalés Phase 2) :
+  - test_overlapping : parsing line[:5] casse pour linenos ≥ 10000 (latent,
+    fixture = 7 lignes)
+  - _highlight re-recherche le pattern (acceptable outil minimal)
+  - content.splitlines() calculé 2× par fichier matché (négligeable)
+
+## Décisions prises
+- PRD cas 2/3 GELÉ : sur 0 match, stdout vide + exit 1 (alignement strict grep).
+  La mention PRD « 0 matches dans 0 fichiers » (lignes 114-115) est lue comme
+  RÉSULTAT LOGIQUE attendu, pas une ligne à imprimer — la parenthèse normative
+  « alignement strict avec grep » prime sur le raccourci tabulaire. Cohérent avec
+  test_no_matches_exits_with_code_1 (stdout == "") et la doctrine pipe-friendly
+  (résumé sur stdout polluerait les pipes). Zéro changement de code.
+- R5 testé via test unitaire sur discover_memory_files (plus direct que subprocess) :
+  structure piège (agent-memory/ + memory/ imbriqué profond) → seul le fichier
+  per-project légitime est trouvé. Exclusion par construction du glob confirmée.
+- Dette ruff format NON corrigée en Phase 3 (surgical changes) — tracée pour
+  commit chore séparé.
+
+## Blocages
+- Aucun
+
+---
+
+## Dernière mise à jour
 Date : 2026-06-30 (Phase 2 — clôture session)
 Session : 70f8d1e1-872c-40ac-9acd-4e523d9c2efe
 
