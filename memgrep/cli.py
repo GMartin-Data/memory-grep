@@ -7,7 +7,7 @@ from pathlib import Path
 
 import typer
 
-from memgrep.formatter import format_file_block, format_summary
+from memgrep.formatter import SUMMARY_SEPARATOR, format_file_block, format_summary
 from memgrep.frontmatter import InvalidFrontmatterError, parse_frontmatter
 from memgrep.matcher import find_matches
 from memgrep.scanner import discover_memory_files
@@ -85,4 +85,5 @@ def main(
     if total_matches == 0:
         sys.exit(1)
 
+    typer.echo(SUMMARY_SEPARATOR)
     typer.echo(format_summary(total_matches, matched_files))
