@@ -1,4 +1,41 @@
 ## Dernière mise à jour
+Date : 2026-06-30 (Phase 3 — clôture v1 + jalon)
+Session : 6bc5c584-f878-4890-8da3-f81e389d28f9
+
+## Tâches complétées
+- Dette ruff format résorbée → commit chore ea1f4a8 (ruff 0.15.5, cosmétique,
+  cli.py + formatter.py + test_smoke.py), poussé sur main
+- Tag annoté v0.1.0 posé sur le commit de clôture v1 (jalon « 4 phases PRD
+  livrées »), poussé sur origin
+
+## En cours
+- Aucune — v1 fonctionnellement complète et taguée
+
+## Prochaines étapes
+1. Dogfooding : valider critères succès PRD 5a/5b/6 sur 1 semaine d'usage réel
+2. v2 différée jusqu'à besoin réel observé en dogfooding (regex, FTS5, --paths…)
+
+## Écarts vs PRD
+- Aucun nouvel écart fonctionnel. Voir décision « tag v0.1.0 » ci-dessous
+  (écart ASSUMÉ et DOCUMENTÉ à la convention CD de CLAUDE.md).
+
+## Décisions prises
+- ÉCART CONVENTION CD ASSUMÉ : pose d'un tag git annoté v0.1.0, alors que
+  CLAUDE.md (section CD) gèle « no version tags ». Motivation : marquer le jalon
+  « v1 fonctionnellement complète » (4 phases PRD livrées) sur un outil perso
+  réinstallable (uv tool install . depuis le repo) — coût quasi nul, valeur de
+  repère réelle. Périmètre de l'écart STRICTEMENT limité au tag :
+  - PAS de GitHub Release, PAS de CHANGELOG.md (progress.md reste l'historique)
+  - version pyproject.toml TOUJOURS figée à 0.1.0 (le tag ne l'incrémente pas)
+  - convention CD non réécrite : reste « no CHANGELOG, version figée » ; seul
+    le « no tags » est ponctuellement dérogé, tracé ici comme décision.
+
+## Blocages
+- Aucun
+
+---
+
+## Dernière mise à jour
 Date : 2026-06-30 (Phase 3 — polish, en cours)
 Session : 6bc5c584-f878-4890-8da3-f81e389d28f9
 
