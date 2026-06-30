@@ -1,4 +1,47 @@
 ## Dernière mise à jour
+Date : 2026-06-30 (Phase 2 — clôture session)
+Session : 70f8d1e1-872c-40ac-9acd-4e523d9c2efe
+
+## Tâches complétées
+- Merge + push Phase 2 : feat/phase-2-output-enriched rebased + merged ff-only
+  sur main (556c2f8 → 1121d30), poussée sur origin, branche locale supprimée
+- docs/ résolu : memory-landscape.md déplacé vers
+  ~/claude-audit-notes/fiche-ponctuelle-memory-landscape.md (doc pédagogique
+  sur les mécanismes mémoire Claude Code, hors scope repo CLAUDE.md « No docs/ »)
+- Mémoire persistante : arbitrage de routage des docs pédagogiques mémorisé
+  dans routing-docs-pedagogiques.md (Claude Code → ~/claude-audit-notes/,
+  data/infra → ~/explain/, thème > versioning)
+
+## En cours
+- Aucune tâche en cours — session clôturée proprement
+
+## Prochaines étapes
+1. Ouvrir une fenêtre de contexte dédiée pour Phase 3 (feat/phase-3-polish)
+2. Trancher formellement l'ambiguïté PRD cas 2/3 (« Sortie 0 matches dans
+   0 fichiers » — stdout vide + exit 1 retenu, à documenter explicitement
+   avant gel Phase 3)
+3. Phase 3 (polish) — livrables PRD + findings cosmétiques low de la revue :
+   - Frontmatter visible en contexte (comportement assumé, à documenter)
+   - test_overlapping : parsing line[:5] fragile pour linenos ≥ 10000
+   - R5 (exclusion agent-memory) : test tmp_path toujours à écrire (signalé
+     Phase 1b, reporté)
+
+## Écarts vs PRD
+- (inchangés depuis checkpoint précédent — voir entrée 2026-06-30 Phase 2)
+
+## Décisions prises
+- docs/memory-landscape.md → ~/claude-audit-notes/ (thème Claude Code, simple
+  conservation suffit, versioning non requis) plutôt que ~/explain/ (versionné
+  mais thème data/infra orthogonal)
+- Règle de routage docs pédagogiques mémorisée dans mémoire persistante
+  (routing-docs-pedagogiques.md)
+
+## Blocages
+- Aucun
+
+---
+
+## Dernière mise à jour
 Date : 2026-06-30 (Phase 2)
 Session : 70f8d1e1-872c-40ac-9acd-4e523d9c2efe
 
