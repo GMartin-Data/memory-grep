@@ -10,6 +10,7 @@ ANSI_HIGHLIGHT = "\x1b[1;31m"  # bold red
 ANSI_RESET = "\x1b[0m"
 
 HEADER_FIELDS = ("name", "type")
+SUMMARY_SEPARATOR = "─" * 10  # horizontal rule before the final summary
 
 
 def _format_header(file_path: Path, metadata: dict | None) -> str:
@@ -107,7 +108,6 @@ def format_file_block(
 
 
 def format_summary(match_count: int, file_count: int) -> str:
-    """Render the trailing summary line, e.g. `3 matches in 2 files`."""
     match_word = "match" if match_count == 1 else "matches"
     file_word = "file" if file_count == 1 else "files"
     return f"{match_count} {match_word} in {file_count} {file_word}"
