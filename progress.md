@@ -1,4 +1,74 @@
 ## Dernière mise à jour
+Date : 2026-06-30 (Phase 2)
+Session : 70f8d1e1-872c-40ac-9acd-4e523d9c2efe
+
+## Tâches complétées
+- Phase 2 (output enrichi) implémentée sur feat/phase-2-output-enriched (6 commits) :
+  - feat(formatter) : format_file_block() — header par fichier ([name | type],
+    path seul si pas de meta), contexte ±2, fusion grep -C des fenêtres
+    chevauchantes (séparateur -- entre fenêtres disjointes), highlight ANSI
+    smart-case-aware ; format_summary() (singulier/pluriel)
+  - feat(cli) : color = sys.stdout.isatty() (plain si piping), résumé final,
+    comptage matched_files
+  - tests : 10 tests unitaires formatter + 1 test intégration cas 5 (fichier
+    illisible, chmod 000, skip sous root)
+  - Revue /code-review xhigh (8 angles + sweep, ~40 candidats, vérif adverse) :
+    0 bug de correctness. 2 findings actionnables corrigés :
+    - fix(formatter+cli) : séparateur horizontal ────────── avant le résumé
+      (conforme mockup PRD ligne 98, était manquant)
+    - fix(formatter) : retrait docstring trivial sur format_summary (CLAUDE.md)
+    - tests : smoke test présence séparateur avant résumé
+  - 26/26 tests verts, ruff clean
+
+## En cours
+- Aucune tâche en cours — Phase 2 terminée sur la branche, non mergée
+
+## Prochaines étapes
+1. Décider du sort de docs/memory-landscape.md (untracked, hors layout CLAUDE.md
+   « No docs/ ») : intégrer ailleurs, garder local, ou supprimer
+2. Rebase + merge ff-only de feat/phase-2-output-enriched sur main, puis push
+3. Ouvrir une fenêtre de contexte dédiée pour Phase 3 (feat/phase-3-polish)
+4. Phase 3 (polish) : reprendre les findings cosmétiques low non traités (voir
+   ci-dessous), + livrables Phase 3 du PRD
+
+## Écarts vs PRD
+- AMBIGUÏTÉ PRD à trancher (cas 2 et 3, PRD lignes 114-115) : le PRD écrit
+  « Sortie `0 matches dans 0 fichiers` » sur 0 match, mais ajoute « alignement
+  strict avec grep ». Le code suit grep (stdout vide + exit 1, pas de résumé),
+  cohérent avec test_no_matches_exits_with_code_1 (stdout == ""). Lecture
+  retenue : « 0 matches dans 0 fichiers » = résultat logique, pas une ligne à
+  imprimer. À confirmer/documenter formellement avant gel Phase 3.
+- Frontmatter visible en contexte : un match en début de body affiche les lignes
+  YAML (---, name:, type:) comme contexte ±2. Aligné ripgrep, cohérent décision
+  Phase 1b « scan content complet ». Non-bug, comportement assumé.
+
+## Findings revue non traités (candidats Phase 3, tous low/cosmétiques)
+- _highlight re-recherche le pattern (Match ne porte pas d'offsets) — design
+  acceptable outil minimal ; bloquant seulement si regex en v2
+- content.splitlines() calculé 2× par fichier matché (négligeable)
+- test_overlapping : parsing line[:5] casse pour linenos ≥ 10000 (latent,
+  fixture = 7 lignes)
+- Valeurs non-string dans header (name: null → None) — YAGNI déjà acté
+- Empty dict {} traité comme None (header path seul) — correct (rien à afficher)
+
+## Décisions prises
+- Header sans frontmatter (ou sans name/type) → path seul, pas de crochets
+  vides « [name: - | type: -] » (cohérent doctrine « pas de bruit » Phase 1b)
+- Fenêtres de contexte chevauchantes → fusion style grep -C (pas de duplication
+  de lignes), fenêtres disjointes séparées par --
+- color/pattern passés en arguments à format_file_block (formatter pur) ;
+  détection TTY (sys.stdout.isatty()) faite dans cli.py (bonne altitude)
+- Numéros de ligne = numéro réel source (1-based), cohérent Phase 1b
+- format_summary gère singulier/pluriel (1 match in 1 file) — raffinement vs
+  « N matches in M files » du progress précédent, conforme esprit grep
+- SUMMARY_SEPARATOR = ─ × 10 (U+2500), constante dans formatter, émise par cli
+
+## Blocages
+- Aucun
+
+---
+
+## Dernière mise à jour
 Date : 2026-06-29 12:40
 Session : d8586491-f904-4a04-a59c-04ea6c32be5a
 
