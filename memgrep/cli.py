@@ -59,7 +59,9 @@ def main(
         try:
             metadata = parse_frontmatter(content)[0]
         except InvalidFrontmatterError:
-            typer.echo(f"{file_path}: invalid frontmatter, scanning content only", err=True)
+            typer.echo(
+                f"{file_path}: invalid frontmatter, scanning content only", err=True
+            )
             metadata = None
 
         if type_filter is not None:

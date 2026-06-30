@@ -22,7 +22,9 @@ def _run_memgrep(pattern: str, fake_home: Path) -> subprocess.CompletedProcess[s
 def test_smoke_finds_match_in_fake_home(fake_home: Path) -> None:
     result = _run_memgrep("dogfooding", fake_home)
 
-    assert result.returncode == 0, f"expected 0, got {result.returncode}\nstderr={result.stderr}"
+    assert result.returncode == 0, (
+        f"expected 0, got {result.returncode}\nstderr={result.stderr}"
+    )
     assert "project_init.md" in result.stdout
     assert "dogfooding" in result.stdout
 

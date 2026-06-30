@@ -18,20 +18,26 @@ def _format_header(file_path: Path, metadata: dict | None) -> str:
     if not metadata:
         return str(file_path)
 
-    parts = [f"{field}: {metadata[field]}" for field in HEADER_FIELDS if field in metadata]
+    parts = [
+        f"{field}: {metadata[field]}" for field in HEADER_FIELDS if field in metadata
+    ]
     if not parts:
         return str(file_path)
     return f"{file_path}  [{' | '.join(parts)}]"
 
 
-def _merge_windows(linenos: list[int], context: int, last_line: int) -> list[tuple[int, int]]:
+def _merge_windows(
+    linenos: list[int], context: int, last_line: int
+) -> list[tuple[int, int]]:
     """Merge per-match context windows into sorted, non-overlapping (start, end) ranges.
 
     Windows are `[lineno - context, lineno + context]`, clamped to `[1, last_line]`.
     Adjacent or overlapping windows are merged (grep -C behaviour: no duplicated
     lines, no separator between them).
     """
-    windows = sorted((max(1, n - context), min(last_line, n + context)) for n in linenos)
+    windows = sorted(
+        (max(1, n - context), min(last_line, n + context)) for n in linenos
+    )
     merged: list[tuple[int, int]] = []
     for start, end in windows:
         if merged and start <= merged[-1][1] + 1:
@@ -61,7 +67,9 @@ def _highlight(line: str, pattern: str) -> str:
             result.append(line[cursor:])
             break
         result.append(line[cursor:index])
-        result.append(f"{ANSI_HIGHLIGHT}{line[index : index + len(needle)]}{ANSI_RESET}")
+        result.append(
+            f"{ANSI_HIGHLIGHT}{line[index : index + len(needle)]}{ANSI_RESET}"
+        )
         cursor = index + len(needle)
     return "".join(result)
 
